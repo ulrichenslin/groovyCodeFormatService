@@ -1,0 +1,50 @@
+group 'com.i3'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    flatDir {
+        dirs 'lib'
+    }
+    mavenCentral()
+
+
+}
+
+configurations.all
+        {
+            resolutionStrategy
+                    {
+                        force 'org.codehaus.groovy:groovy-all:2.3.7'
+                    }
+        }
+
+dependencies {
+    compile fileTree(dir: 'lib')
+
+    compile 'org.codehaus.groovy:groovy-all:2.3.7'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'io.vertx', name: 'vertx-lang-groovy', version: '3.4.1'
+    compile group: 'io.vertx', name: 'vertx-core', version: '3.4.1'
+    compile group: 'io.vertx', name: 'vertx-web', version: '3.4.1'
+    compile group: 'io.vertx', name: 'vertx-auth-common', version: '3.4.1'
+    compile group: 'io.vertx', name: 'vertx-auth-oauth2', version: '3.4.1'
+
+}
+
+task run(type: JavaExec) {
+    description 'Run Http Server'
+
+    // Set main property to name of Groovy script class.
+    main = 'com.i3.HttpServer'
+
+    // Set classpath for running the Groovy script.
+    classpath = sourceSets.main.runtimeClasspath
+
+}
